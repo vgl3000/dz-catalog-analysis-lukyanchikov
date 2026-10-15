@@ -1,3 +1,4 @@
+
 import math
 
 movies = [
@@ -84,6 +85,9 @@ movies = [
 ]
 
 
+# ЭТАП 1. ПЕРЕМЕННЫЕ, ЧИСЛА И MATH
+
+
 def average_rating(movies):
     total_rating = 0
 
@@ -109,13 +113,14 @@ def catalog_age_stats(movies, current_year=2026):
     return oldest, newest, average
 
 
-
 def duration_in_hours(minutes):
     hours = minutes // 60
     remaining_minutes = minutes % 60
 
     return f"{hours}ч {remaining_minutes}м"
 
+
+# ЭТАП 2. УСЛОВИЯ И MATCH
 
 
 def rating_tier(rating):
@@ -137,6 +142,38 @@ def decade_label(year):
             return "старые"
 
 
+# ЭТАП 3. ЦИКЛЫ
+
+
+def find_first_masterpiece(movies):
+    index = 0
+
+    while index < len(movies):
+        movie = movies[index]
+
+        if movie["rating"] > 9.0:
+            print("Найден фильм:", movie["title"])
+            break
+
+        index += 1
+
+    else:
+        print("Шедевров не найдено")
+
+
+def count_long_movies(movies, threshold=120):
+    count = 0
+
+    for movie in movies:
+        if movie["duration_min"] > threshold:
+            count += 1
+
+    return count
+
+
+# ЗАПУСК ПРОГРАММЫ
+
+
 if __name__ == "__main__":
     print("Количество фильмов:", len(movies))
     print("Средний рейтинг:", average_rating(movies))
@@ -144,12 +181,31 @@ if __name__ == "__main__":
     print("Длительность 155 минут:", duration_in_hours(155))
     print("Длительность 118 минут:", duration_in_hours(118))
 
+    print("\nКатегории рейтингов:")
     print("Рейтинг 9.2:", rating_tier(9.2))
     print("Рейтинг 8.6:", rating_tier(8.6))
     print("Рейтинг 6.4:", rating_tier(6.4))
     print("Рейтинг 4.8:", rating_tier(4.8))
 
+    print("\nКатегории фильмов по годам:")
     print("Фильм 2024 года:", decade_label(2024))
     print("Фильм 2020 года:", decade_label(2020))
     print("Фильм 2015 года:", decade_label(2015))
     print("Фильм 2011 года:", decade_label(2011))
+
+    print("\nФильмы без жанра comedy:")
+
+    for movie in movies:
+        if "comedy" in movie["genres"]:
+            continue
+
+        print(movie["title"])
+
+    print("\nПоиск фильма с рейтингом выше 9:")
+    find_first_masterpiece(movies)
+
+    print("\nПроверка без шедевров:")
+    find_first_masterpiece(movies[:7])
+
+    print("\nКоличество фильмов длиннее 120 минут:")
+    print(count_long_movies(movies))
