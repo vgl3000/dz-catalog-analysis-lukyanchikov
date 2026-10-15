@@ -118,6 +118,24 @@ def duration_in_hours(minutes):
 
 
 
+def rating_tier(rating):
+    if rating >= 9:
+        return "шедевр"
+    elif rating >= 7:
+        return "хорошо"
+    else:
+        return "средне" if rating >= 5 else "слабо"
+
+
+def decade_label(year):
+    match year:
+        case _ if year > 2020:
+            return "новые"
+        case _ if year >= 2015:
+            return "недавние"
+        case _:
+            return "старые"
+
 
 if __name__ == "__main__":
     print("Количество фильмов:", len(movies))
@@ -125,3 +143,13 @@ if __name__ == "__main__":
     print("Возраст фильмов:", catalog_age_stats(movies))
     print("Длительность 155 минут:", duration_in_hours(155))
     print("Длительность 118 минут:", duration_in_hours(118))
+
+    print("Рейтинг 9.2:", rating_tier(9.2))
+    print("Рейтинг 8.6:", rating_tier(8.6))
+    print("Рейтинг 6.4:", rating_tier(6.4))
+    print("Рейтинг 4.8:", rating_tier(4.8))
+
+    print("Фильм 2024 года:", decade_label(2024))
+    print("Фильм 2020 года:", decade_label(2020))
+    print("Фильм 2015 года:", decade_label(2015))
+    print("Фильм 2011 года:", decade_label(2011))
