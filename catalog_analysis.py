@@ -85,8 +85,6 @@ movies = [
 ]
 
 
-# ЭТАП 1. ПЕРЕМЕННЫЕ, ЧИСЛА И MATH
-
 
 def average_rating(movies):
     total_rating = 0
@@ -120,8 +118,6 @@ def duration_in_hours(minutes):
     return f"{hours}ч {remaining_minutes}м"
 
 
-# ЭТАП 2. УСЛОВИЯ И MATCH
-
 
 def rating_tier(rating):
     if rating >= 9:
@@ -142,7 +138,6 @@ def decade_label(year):
             return "старые"
 
 
-# ЭТАП 3. ЦИКЛЫ
 
 
 def find_first_masterpiece(movies):
@@ -171,9 +166,6 @@ def count_long_movies(movies, threshold=120):
     return count
 
 
-# ЗАПУСК ПРОГРАММЫ
-
-
 if __name__ == "__main__":
     print("Количество фильмов:", len(movies))
     print("Средний рейтинг:", average_rating(movies))
@@ -193,6 +185,7 @@ if __name__ == "__main__":
     print("Фильм 2015 года:", decade_label(2015))
     print("Фильм 2011 года:", decade_label(2011))
 
+   
     print("\nФильмы без жанра comedy:")
 
     for movie in movies:
