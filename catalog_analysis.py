@@ -140,6 +140,7 @@ def decade_label(year):
 
 
 
+
 def find_first_masterpiece(movies):
     index = 0
 
@@ -156,6 +157,7 @@ def find_first_masterpiece(movies):
         print("Шедевров не найдено")
 
 
+
 def count_long_movies(movies, threshold=120):
     count = 0
 
@@ -164,6 +166,40 @@ def count_long_movies(movies, threshold=120):
             count += 1
 
     return count
+
+
+def normalize_title(title):
+    words = title.split(" ")
+    normalized_words = []
+
+    for word in words:
+        if word:
+            normalized_words.append(
+                word[0].upper() + word[1:].lower()
+            )
+
+    return " ".join(normalized_words)
+
+
+
+def make_slug(title):
+    normalized = normalize_title(title)
+    slug = normalized.lower().replace(" ", "-")
+
+    return slug
+
+
+
+def format_report_line(movie):
+    title = normalize_title(movie["title"])
+    genres = ", ".join(sorted(movie["genres"]))
+    duration = duration_in_hours(movie["duration_min"])
+
+    return (
+        f'"{title}" ({movie["year"]}) — '
+        f'{movie["rating"]}/10, {duration}, жанры: {genres}'
+    )
+
 
 
 if __name__ == "__main__":
@@ -202,3 +238,14 @@ if __name__ == "__main__":
 
     print("\nКоличество фильмов длиннее 120 минут:")
     print(count_long_movies(movies))
+    print("\nНормализация названий:")
+    print(normalize_title("silent hours"))
+    print(normalize_title("midnight in oslo"))
+    
+    print("\nПреобразование названий в slug:")
+    print(make_slug("Silent Hours"))
+    print(make_slug("The Quiet Algorithm"))
+    print(make_slug("midnight in oslo"))
+    print("\nОтчёт о фильмах:")
+    print(format_report_line(movies[7]))
+    print(format_report_line(movies[5]))
