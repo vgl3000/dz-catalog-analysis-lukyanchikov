@@ -342,111 +342,78 @@ def iter_high_rated(movies, min_rating=8.0):
             yield movie
 
 
-if __name__ == "__main__":
-    print("Количество фильмов:", len(movies))
-    print("Средний рейтинг:", average_rating(movies))
-    print("Возраст фильмов:", catalog_age_stats(movies))
 
-    print("Длительность 155 минут:", duration_in_hours(155))
-    print("Длительность 118 минут:", duration_in_hours(118))
-
-    print("\nКатегории рейтингов:")
-    print("Рейтинг 9.2:", rating_tier(9.2))
-    print("Рейтинг 8.6:", rating_tier(8.6))
-    print("Рейтинг 6.4:", rating_tier(6.4))
-    print("Рейтинг 4.8:", rating_tier(4.8))
-
-    print("\nКатегории фильмов по годам:")
-    print("Фильм 2024 года:", decade_label(2024))
-    print("Фильм 2020 года:", decade_label(2020))
-    print("Фильм 2015 года:", decade_label(2015))
-    print("Фильм 2011 года:", decade_label(2011))
-
-    print("\nФильмы без жанра comedy:")
-
+def print_non_comedy_movies(movies):
     for movie in movies:
         if "comedy" in movie["genres"]:
             continue
 
         print(movie["title"])
 
-    print("\nПоиск фильма с рейтингом выше 9:")
-    find_first_masterpiece(movies)
 
-    print("\nПроверка без шедевров:")
-    find_first_masterpiece(movies[:7])
-
-    print("\nКоличество фильмов длиннее 120 минут:")
-    print(count_long_movies(movies))
-
-    print("\nНормализация названий:")
-    print(normalize_title("silent hours"))
-    print(normalize_title("midnight in oslo"))
-
-    print("\nПреобразование названий в slug:")
-    print(make_slug("Silent Hours"))
-    print(make_slug("The Quiet Algorithm"))
-    print(make_slug("midnight in oslo"))
-
-    print("\nОтчёт о фильмах:")
-    print(format_report_line(movies[7]))
-    print(format_report_line(movies[5]))
-
-    
-    print("\nСортировка фильмов по рейтингу:")
-
-    sorted_titles = titles_sorted_by_rating(movies)
-
-    for title in sorted_titles:
-        print(title)
-
-    print("\nТоп-3 фильма:")
-    print(top_n_by_rating(movies))
-
-    print("\nКоличество фильмов по жанрам:")
-    genre_counts = count_by_genre(movies)
-
-    for genre in sorted(genre_counts):
-        print(genre, genre_counts[genre])
-
-    print("\nФильмография актёров:")
-    filmography = actor_filmography(movies)
-
-    print("O. Isaac:", filmography["O. Isaac"])
-    print("A. Novak:", filmography["A. Novak"])
-
-    print("\nФильмы с рейтингом выше среднего:")
-
-    high_rated = movies_above_average(movies)
-
-    for title in high_rated:
-        print(title, high_rated[title])
-    print("\nВсе жанры каталога:")
-
-    genres = all_genres(movies)
-
-    for genre in sorted(genres):
-        print(genre)
-
-    print("\nОбщие актёры двух фильмов:")
-    result = common_actors(movies[0], movies[3])
-    print(result)
-    print("\nЖанры только из первой группы:")
-    result = genres_only_in_one(movies[5:6], movies[:5])
-    print(result)
-    
-    
-    print("\nФильмы с рейтингом от 8.0:")
-
+def print_high_rated_movies(movies):
     for movie in iter_high_rated(movies):
         print(format_report_line(movie))
 
-    print("\nСуммарная длительность фильмов с рейтингом выше 7:")
 
-    total_minutes = sum(
+def total_duration_above_seven(movies):
+    total = sum(
         movie["duration_min"]
         for movie in movies
         if movie["rating"] > 7
     )
 
-    print(total_minutes)
+    return total
+
+
+
+def build_report(movies):
+    print("ОТЧЕТ ПО КАТАЛОГУ")
+
+    rating = average_rating(movies)
+    print("Средний рейтинг:", rating)
+
+    ages = catalog_age_stats(movies)
+    average_age = ages[2]
+    print("Средний возраст фильмов:", average_age, "лет")
+
+    print("\nТоп-3 фильма:")
+
+    sorted_movies = sorted(
+        movies,
+        key=get_movie_rating,
+        reverse=True,
+    )
+
+    top_movies = sorted_movies[:3]
+
+    for movie in top_movies:
+        report_line = format_report_line(movie)
+        print(report_line)
+
+    print("\nФильмов по жанрам:")
+
+    genre_counts = count_by_genre(movies)
+
+    genre_names = sorted(genre_counts)
+
+    genre_names = sorted(
+        genre_names,
+        key=genre_counts.get,
+        reverse=True,
+    )
+
+    for genre in genre_names:
+        count = genre_counts[genre]
+        print(genre, "—", count)
+
+    genres = all_genres(movies)
+    sorted_genres = sorted(genres)
+    genres_text = ", ".join(sorted_genres)
+
+    print("\nВсе жанры каталога:", genres_text)
+
+
+
+if __name__ == "__main__":
+    build_report(movies)
