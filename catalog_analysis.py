@@ -266,6 +266,23 @@ def top_n_by_rating(movies, n=3):
 
 
 
+# ЭТАП 6. СЛОВАРИ
+
+
+def count_by_genre(movies):
+    genre_counts = {}
+
+    for movie in movies:
+        for genre in movie["genres"]:
+            if genre not in genre_counts:
+                genre_counts[genre] = 0
+
+            genre_counts[genre] = genre_counts[genre] + 1
+
+    return genre_counts
+
+
+
 
 if __name__ == "__main__":
     print("Количество фильмов:", len(movies))
@@ -310,3 +327,7 @@ if __name__ == "__main__":
         print(title)
     print("\nТоп-3 фильма:")
     print(top_n_by_rating(movies))
+    print("\nКоличество фильмов по жанрам:")
+    genre_counts = count_by_genre(movies)
+    for genre in sorted(genre_counts):
+        print(genre, genre_counts[genre])
