@@ -201,6 +201,23 @@ def format_report_line(movie):
     )
 
 
+# ЭТАП 5. СПИСКИ
+
+
+def titles_sorted_by_rating(movies):
+    sorted_movies = sorted(
+        movies,
+        key=lambda movie: movie["rating"],
+    )
+
+    titles = []
+
+    for movie in sorted_movies:
+        titles.append(movie["title"])
+
+    return titles
+
+
 
 if __name__ == "__main__":
     print("Количество фильмов:", len(movies))
@@ -249,3 +266,9 @@ if __name__ == "__main__":
     print("\nОтчёт о фильмах:")
     print(format_report_line(movies[7]))
     print(format_report_line(movies[5]))
+    print("\nСортировка фильмов по рейтингу:")
+
+    sorted_titles = titles_sorted_by_rating(movies)
+
+    for title in sorted_titles:
+        print(title)
