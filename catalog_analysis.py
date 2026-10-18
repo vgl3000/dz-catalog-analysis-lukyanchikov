@@ -85,6 +85,8 @@ movies = [
 ]
 
 
+# 1. Числа и MATH
+
 
 def average_rating(movies):
     total_rating = 0
@@ -95,7 +97,6 @@ def average_rating(movies):
     average = total_rating / len(movies)
 
     return round(average, 1)
-
 
 
 def catalog_age_stats(movies, current_year=2026):
@@ -115,13 +116,14 @@ def catalog_age_stats(movies, current_year=2026):
     return oldest, newest, rounded_age
 
 
-
 def duration_in_hours(minutes):
     hours = minutes // 60
     remaining_minutes = minutes % 60
 
     return f"{hours}ч {remaining_minutes}м"
 
+
+# 2. Условия и MATCH
 
 
 def rating_tier(rating):
@@ -143,7 +145,7 @@ def decade_label(year):
             return "старые"
 
 
-
+# 3. Циклы
 
 
 def find_first_masterpiece(movies):
@@ -162,7 +164,6 @@ def find_first_masterpiece(movies):
         print("Шедевров не найдено")
 
 
-
 def count_long_movies(movies, threshold=120):
     count = 0
 
@@ -172,6 +173,8 @@ def count_long_movies(movies, threshold=120):
 
     return count
 
+
+# 4. Строки
 
 
 def normalize_title(title):
@@ -191,15 +194,11 @@ def normalize_title(title):
     return result
 
 
-
-
 def make_slug(title):
     normalized = normalize_title(title)
     slug = normalized.lower().replace(" ", "-")
 
     return slug
-
-
 
 
 def format_report_line(movie):
@@ -219,9 +218,12 @@ def format_report_line(movie):
     return result
 
 
+# 5. Списки и сортировка
+
 
 def get_movie_rating(movie):
     rating = movie["rating"]
+
     return rating
 
 
@@ -239,9 +241,6 @@ def titles_sorted_by_rating(movies):
         titles.append(title)
 
     return titles
-
-
-
 
 
 def top_n_by_rating(movies, n=3):
@@ -263,7 +262,7 @@ def top_n_by_rating(movies, n=3):
     return top_movies
 
 
-
+# 6. Словари
 
 
 def count_by_genre(movies):
@@ -277,53 +276,94 @@ def count_by_genre(movies):
     return genre_counts
 
 
+def actor_filmography(movies):
+    filmography = {}
 
+    for movie in movies:
+        title = movie["title"]
+
+        for actor in movie["actors"]:
+            if actor not in filmography:
+                filmography[actor] = []
+
+            filmography[actor].append(title)
+
+    return filmography
+
+
+# Проверка работы прогграммы
 
 
 if __name__ == "__main__":
     print("Количество фильмов:", len(movies))
     print("Средний рейтинг:", average_rating(movies))
     print("Возраст фильмов:", catalog_age_stats(movies))
+
     print("Длительность 155 минут:", duration_in_hours(155))
     print("Длительность 118 минут:", duration_in_hours(118))
+
     print("\nКатегории рейтингов:")
     print("Рейтинг 9.2:", rating_tier(9.2))
     print("Рейтинг 8.6:", rating_tier(8.6))
     print("Рейтинг 6.4:", rating_tier(6.4))
     print("Рейтинг 4.8:", rating_tier(4.8))
+
     print("\nКатегории фильмов по годам:")
     print("Фильм 2024 года:", decade_label(2024))
     print("Фильм 2020 года:", decade_label(2020))
     print("Фильм 2015 года:", decade_label(2015))
     print("Фильм 2011 года:", decade_label(2011))
+
     print("\nФильмы без жанра comedy:")
+
     for movie in movies:
         if "comedy" in movie["genres"]:
             continue
+
         print(movie["title"])
+
     print("\nПоиск фильма с рейтингом выше 9:")
     find_first_masterpiece(movies)
+
     print("\nПроверка без шедевров:")
     find_first_masterpiece(movies[:7])
+
     print("\nКоличество фильмов длиннее 120 минут:")
     print(count_long_movies(movies))
+
     print("\nНормализация названий:")
     print(normalize_title("silent hours"))
     print(normalize_title("midnight in oslo"))
+
     print("\nПреобразование названий в slug:")
     print(make_slug("Silent Hours"))
     print(make_slug("The Quiet Algorithm"))
     print(make_slug("midnight in oslo"))
+
     print("\nОтчёт о фильмах:")
     print(format_report_line(movies[7]))
     print(format_report_line(movies[5]))
+
     print("\nСортировка фильмов по рейтингу:")
+
     sorted_titles = titles_sorted_by_rating(movies)
+
     for title in sorted_titles:
         print(title)
+
     print("\nТоп-3 фильма:")
     print(top_n_by_rating(movies))
+
     print("\nКоличество фильмов по жанрам:")
+
     genre_counts = count_by_genre(movies)
+
     for genre in sorted(genre_counts):
         print(genre, genre_counts[genre])
+
+    print("\nФильмография актёров:")
+
+    filmography = actor_filmography(movies)
+
+    print("O. Isaac:", filmography["O. Isaac"])
+    print("A. Novak:", filmography["A. Novak"])
