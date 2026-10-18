@@ -85,7 +85,7 @@ movies = [
 ]
 
 
-# 1. Числа и MATH
+
 
 
 def average_rating(movies):
@@ -123,7 +123,7 @@ def duration_in_hours(minutes):
     return f"{hours}ч {remaining_minutes}м"
 
 
-# 2. Условия и MATCH
+
 
 
 def rating_tier(rating):
@@ -145,7 +145,6 @@ def decade_label(year):
             return "старые"
 
 
-# 3. Циклы
 
 
 def find_first_masterpiece(movies):
@@ -174,7 +173,6 @@ def count_long_movies(movies, threshold=120):
     return count
 
 
-# 4. Строки
 
 
 def normalize_title(title):
@@ -218,7 +216,7 @@ def format_report_line(movie):
     return result
 
 
-# 5. Списки и сортировка
+
 
 
 def get_movie_rating(movie):
@@ -262,7 +260,7 @@ def top_n_by_rating(movies, n=3):
     return top_movies
 
 
-# 6. Словари
+
 
 
 def count_by_genre(movies):
@@ -305,7 +303,36 @@ def movies_above_average(movies):
 
 
 
-# Проверка работы прогграммы
+
+
+def all_genres(movies):
+    genres = set()
+
+    for movie in movies:
+        genres.update(movie["genres"])
+
+    return genres
+
+
+
+def common_actors(movie1, movie2):
+    actors1 = set(movie1["actors"])
+    actors2 = set(movie2["actors"])
+
+    common = actors1 & actors2
+
+    return common
+
+
+def genres_only_in_one(movies_a, movies_b):
+    genres_a = all_genres(movies_a)
+    genres_b = all_genres(movies_b)
+
+    result = genres_a - genres_b
+
+    return result
+
+
 
 
 if __name__ == "__main__":
@@ -387,3 +414,16 @@ if __name__ == "__main__":
 
     for title in high_rated:
         print(title, high_rated[title])
+    print("\nВсе жанры каталога:")
+
+    genres = all_genres(movies)
+
+    for genre in sorted(genres):
+        print(genre)
+
+    print("\nОбщие актёры двух фильмов:")
+    result = common_actors(movies[0], movies[3])
+    print(result)
+    print("\nЖанры только из первой группы:")
+    result = genres_only_in_one(movies[5:6], movies[:5])
+    print(result)
