@@ -355,14 +355,12 @@ if __name__ == "__main__":
     print(top_n_by_rating(movies))
 
     print("\nКоличество фильмов по жанрам:")
-
     genre_counts = count_by_genre(movies)
 
     for genre in sorted(genre_counts):
         print(genre, genre_counts[genre])
 
     print("\nФильмография актёров:")
-
     filmography = actor_filmography(movies)
 
     print("O. Isaac:", filmography["O. Isaac"])
