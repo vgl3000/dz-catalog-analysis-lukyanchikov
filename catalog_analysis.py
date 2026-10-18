@@ -344,6 +344,7 @@ if __name__ == "__main__":
     print(format_report_line(movies[7]))
     print(format_report_line(movies[5]))
 
+    
     print("\nСортировка фильмов по рейтингу:")
 
     sorted_titles = titles_sorted_by_rating(movies)
