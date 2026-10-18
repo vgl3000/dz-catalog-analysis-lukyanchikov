@@ -435,6 +435,7 @@ if __name__ == "__main__":
     result = genres_only_in_one(movies[5:6], movies[:5])
     print(result)
     
+    
     print("\nФильмы с рейтингом от 8.0:")
 
     for movie in iter_high_rated(movies):
