@@ -291,6 +291,20 @@ def actor_filmography(movies):
     return filmography
 
 
+
+def movies_above_average(movies):
+    average = average_rating(movies)
+
+    result = {
+        movie["title"]: movie["rating"]
+        for movie in movies
+        if movie["rating"] > average
+    }
+
+    return result
+
+
+
 # Проверка работы прогграммы
 
 
@@ -366,3 +380,10 @@ if __name__ == "__main__":
 
     print("O. Isaac:", filmography["O. Isaac"])
     print("A. Novak:", filmography["A. Novak"])
+
+    print("\nФильмы с рейтингом выше среднего:")
+
+    high_rated = movies_above_average(movies)
+
+    for title in high_rated:
+        print(title, high_rated[title])
