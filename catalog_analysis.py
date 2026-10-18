@@ -97,6 +97,7 @@ def average_rating(movies):
     return round(average, 1)
 
 
+
 def catalog_age_stats(movies, current_year=2026):
     ages = []
 
@@ -106,9 +107,13 @@ def catalog_age_stats(movies, current_year=2026):
 
     oldest = max(ages)
     newest = min(ages)
-    average = math.ceil(sum(ages) / len(ages))
 
-    return oldest, newest, average
+    total_age = sum(ages)
+    average_age = total_age / len(ages)
+    rounded_age = math.ceil(average_age)
+
+    return oldest, newest, rounded_age
+
 
 
 def duration_in_hours(minutes):
@@ -168,17 +173,23 @@ def count_long_movies(movies, threshold=120):
     return count
 
 
+
 def normalize_title(title):
     words = title.split(" ")
     normalized_words = []
 
     for word in words:
-        if word:
-            normalized_words.append(
-                word[0].upper() + word[1:].lower()
-            )
+        if word != "":
+            first_letter = word[0].upper()
+            other_letters = word[1:].lower()
 
-    return " ".join(normalized_words)
+            new_word = first_letter + other_letters
+            normalized_words.append(new_word)
+
+    result = " ".join(normalized_words)
+
+    return result
+
 
 
 
@@ -190,31 +201,46 @@ def make_slug(title):
 
 
 
+
 def format_report_line(movie):
     title = normalize_title(movie["title"])
-    genres = ", ".join(sorted(movie["genres"]))
-    duration = duration_in_hours(movie["duration_min"])
+    year = movie["year"]
+    rating = movie["rating"]
 
-    return (
-        f'"{title}" ({movie["year"]}) — '
-        f'{movie["rating"]}/10, {duration}, жанры: {genres}'
-    )
+    minutes = movie["duration_min"]
+    duration = duration_in_hours(minutes)
 
+    sorted_genres = sorted(movie["genres"])
+    genres = ", ".join(sorted_genres)
+
+    result = f'"{title}" ({year}) — {rating}/10, '
+    result += f"{duration}, жанры: {genres}"
+
+    return result
+
+
+
+def get_movie_rating(movie):
+    rating = movie["rating"]
+    return rating
 
 
 def titles_sorted_by_rating(movies):
     sorted_movies = sorted(
         movies,
-        key=lambda movie: movie["rating"],
+        key=get_movie_rating,
         reverse=True,
     )
 
     titles = []
 
     for movie in sorted_movies:
-        titles.append(movie["title"])
+        title = movie["title"]
+        titles.append(title)
 
     return titles
+
+
 
 
 
@@ -223,7 +249,7 @@ def titles_sorted_by_rating(movies):
 def top_n_by_rating(movies, n=3):
     sorted_movies = sorted(
         movies,
-        key=lambda movie: movie["rating"],
+        key=get_movie_rating,
         reverse=True,
     )
 
@@ -237,6 +263,7 @@ def top_n_by_rating(movies, n=3):
         top_movies.append(film)
 
     return top_movies
+
 
 
 
