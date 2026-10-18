@@ -244,8 +244,6 @@ def titles_sorted_by_rating(movies):
 
 
 
-
-
 def top_n_by_rating(movies, n=3):
     sorted_movies = sorted(
         movies,
@@ -266,7 +264,6 @@ def top_n_by_rating(movies, n=3):
 
 
 
-# ЭТАП 6. СЛОВАРИ
 
 
 def count_by_genre(movies):
@@ -274,12 +271,11 @@ def count_by_genre(movies):
 
     for movie in movies:
         for genre in movie["genres"]:
-            if genre not in genre_counts:
-                genre_counts[genre] = 0
-
-            genre_counts[genre] = genre_counts[genre] + 1
+            count = genre_counts.get(genre, 0)
+            genre_counts[genre] = count + 1
 
     return genre_counts
+
 
 
 
