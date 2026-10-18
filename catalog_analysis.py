@@ -201,13 +201,12 @@ def format_report_line(movie):
     )
 
 
-# ЭТАП 5. СПИСКИ
-
 
 def titles_sorted_by_rating(movies):
     sorted_movies = sorted(
         movies,
         key=lambda movie: movie["rating"],
+        reverse=True,
     )
 
     titles = []
@@ -219,46 +218,58 @@ def titles_sorted_by_rating(movies):
 
 
 
+
+
+def top_n_by_rating(movies, n=3):
+    sorted_movies = sorted(
+        movies,
+        key=lambda movie: movie["rating"],
+        reverse=True,
+    )
+
+    top_movies = []
+
+    for movie in sorted_movies[:n]:
+        title = movie["title"]
+        rating = movie["rating"]
+
+        film = (title, rating)
+        top_movies.append(film)
+
+    return top_movies
+
+
+
 if __name__ == "__main__":
     print("Количество фильмов:", len(movies))
     print("Средний рейтинг:", average_rating(movies))
     print("Возраст фильмов:", catalog_age_stats(movies))
     print("Длительность 155 минут:", duration_in_hours(155))
     print("Длительность 118 минут:", duration_in_hours(118))
-
     print("\nКатегории рейтингов:")
     print("Рейтинг 9.2:", rating_tier(9.2))
     print("Рейтинг 8.6:", rating_tier(8.6))
     print("Рейтинг 6.4:", rating_tier(6.4))
     print("Рейтинг 4.8:", rating_tier(4.8))
-
     print("\nКатегории фильмов по годам:")
     print("Фильм 2024 года:", decade_label(2024))
     print("Фильм 2020 года:", decade_label(2020))
     print("Фильм 2015 года:", decade_label(2015))
     print("Фильм 2011 года:", decade_label(2011))
-
-   
     print("\nФильмы без жанра comedy:")
-
     for movie in movies:
         if "comedy" in movie["genres"]:
             continue
-
         print(movie["title"])
-
     print("\nПоиск фильма с рейтингом выше 9:")
     find_first_masterpiece(movies)
-
     print("\nПроверка без шедевров:")
     find_first_masterpiece(movies[:7])
-
     print("\nКоличество фильмов длиннее 120 минут:")
     print(count_long_movies(movies))
     print("\nНормализация названий:")
     print(normalize_title("silent hours"))
     print(normalize_title("midnight in oslo"))
-    
     print("\nПреобразование названий в slug:")
     print(make_slug("Silent Hours"))
     print(make_slug("The Quiet Algorithm"))
@@ -267,8 +278,8 @@ if __name__ == "__main__":
     print(format_report_line(movies[7]))
     print(format_report_line(movies[5]))
     print("\nСортировка фильмов по рейтингу:")
-
     sorted_titles = titles_sorted_by_rating(movies)
-
     for title in sorted_titles:
         print(title)
+    print("\nТоп-3 фильма:")
+    print(top_n_by_rating(movies))
