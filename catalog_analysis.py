@@ -1,4 +1,3 @@
-
 import math
 
 movies = [
@@ -85,9 +84,6 @@ movies = [
 ]
 
 
-
-
-
 def average_rating(movies):
     total_rating = 0
 
@@ -123,9 +119,6 @@ def duration_in_hours(minutes):
     return f"{hours}ч {remaining_minutes}м"
 
 
-
-
-
 def rating_tier(rating):
     if rating >= 9:
         return "шедевр"
@@ -143,8 +136,6 @@ def decade_label(year):
             return "недавние"
         case _:
             return "старые"
-
-
 
 
 def find_first_masterpiece(movies):
@@ -171,8 +162,6 @@ def count_long_movies(movies, threshold=120):
             count += 1
 
     return count
-
-
 
 
 def normalize_title(title):
@@ -216,9 +205,6 @@ def format_report_line(movie):
     return result
 
 
-
-
-
 def get_movie_rating(movie):
     rating = movie["rating"]
 
@@ -260,9 +246,6 @@ def top_n_by_rating(movies, n=3):
     return top_movies
 
 
-
-
-
 def count_by_genre(movies):
     genre_counts = {}
 
@@ -289,20 +272,14 @@ def actor_filmography(movies):
     return filmography
 
 
-
 def movies_above_average(movies):
     average = average_rating(movies)
 
     result = {
-        movie["title"]: movie["rating"]
-        for movie in movies
-        if movie["rating"] > average
+        movie["title"]: movie["rating"] for movie in movies if movie["rating"] > average
     }
 
     return result
-
-
-
 
 
 def all_genres(movies):
@@ -312,7 +289,6 @@ def all_genres(movies):
         genres.update(movie["genres"])
 
     return genres
-
 
 
 def common_actors(movie1, movie2):
@@ -333,14 +309,12 @@ def genres_only_in_one(movies_a, movies_b):
     return result
 
 
-
 def iter_high_rated(movies, min_rating=8.0):
     for movie in movies:
         rating = movie["rating"]
 
         if rating >= min_rating:
             yield movie
-
 
 
 def print_non_comedy_movies(movies):
@@ -357,14 +331,9 @@ def print_high_rated_movies(movies):
 
 
 def total_duration_above_seven(movies):
-    total = sum(
-        movie["duration_min"]
-        for movie in movies
-        if movie["rating"] > 7
-    )
+    total = sum(movie["duration_min"] for movie in movies if movie["rating"] > 7)
 
     return total
-
 
 
 def build_report(movies):
@@ -412,7 +381,6 @@ def build_report(movies):
     genres_text = ", ".join(sorted_genres)
 
     print("\nВсе жанры каталога:", genres_text)
-
 
 
 if __name__ == "__main__":
